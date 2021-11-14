@@ -6,3 +6,10 @@ abstract class GalleryEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class FetchPhotosEvent extends GalleryEvent {
+  final String page;
+  final String limit;
+
+  FetchPhotosEvent({this.page = '1', this.limit = '20'});
+}
