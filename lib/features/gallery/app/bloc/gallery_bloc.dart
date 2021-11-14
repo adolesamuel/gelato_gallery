@@ -49,7 +49,8 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
             ? state.copyWith(hasReachedMax: true)
             : state.copyWith(
                 isFirstTime: false,
-                photos: List.of(state.photos)..addAll(photos),
+                photos: photos,
+                // photos: List.of(state.photos)..addAll(photos),
                 hasReachedMax: false,
               );
       }));
