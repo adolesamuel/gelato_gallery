@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gelato_gallery/features/gallery/app/pages/gallery_landing_page.dart';
+import 'injection_container.dart' as get_it;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ///Await [Dependency_injection] processing
+  ///using Get_it package
+  await get_it.init();
   runApp(const MyApp());
 }
 
