@@ -25,9 +25,12 @@ class _GalleryListItemState extends State<GalleryListItem> {
       },
       child: Stack(
         children: [
-          Image.network(
-            widget.photo.imageUrl,
-            fit: BoxFit.cover,
+          Align(
+            alignment: Alignment.center,
+            child: Image.network(
+              widget.photo.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
@@ -35,7 +38,15 @@ class _GalleryListItemState extends State<GalleryListItem> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 widget.photo.author,
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    shadows: const [
+                      Shadow(
+                          color: Colors.black,
+                          blurRadius: 1.0,
+                          offset: Offset(0.5, 0.0))
+                    ]),
               ),
             ),
           )

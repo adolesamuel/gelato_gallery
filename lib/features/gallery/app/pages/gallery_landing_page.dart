@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gelato_gallery/features/common/scroll_behavior.dart';
 import 'package:gelato_gallery/features/gallery/app/bloc/gallery_bloc.dart';
 import 'package:gelato_gallery/features/gallery/app/widgets/gallery_list_item.dart';
 import 'package:gelato_gallery/features/gallery/app/widgets/gallery_sliver_app_bar.dart';
@@ -60,18 +61,26 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
           },
           builder: (context, state) {
             return Scaffold(
-              body: CustomScrollView(
+              body: Scrollbar(
                 controller: _scrollController,
-                slivers: [
-                  GallerySliverAppBar(),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => GalleryListItem(
-                              photo: photoList[index],
-                            ),
-                        childCount: photoList.length),
+                isAlwaysShown: true,
+                interactive: true,
+                child: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      GallerySliverAppBar(),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                            (context, index) => GalleryListItem(
+                                  photo: photoList[index],
+                                ),
+                            childCount: photoList.length),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           },

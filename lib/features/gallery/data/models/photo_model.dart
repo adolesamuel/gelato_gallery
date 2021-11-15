@@ -70,7 +70,7 @@ class PhotoModel extends Photo {
     //so I strip the first part less the width and height
     //and attach the (image height and width both divided by 10)
 
-    int scaleFactor = 5;
+    int scaleFactor = 6;
 
     double height = (map['height'] / scaleFactor);
 

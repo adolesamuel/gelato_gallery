@@ -19,7 +19,7 @@ class _GallerySliverAppBarState extends State<GallerySliverAppBar> {
     return SliverAppBar(
         pinned: true,
         snap: false,
-        floating: false,
+        floating: true,
         forceElevated: true,
         expandedHeight: size.height * 0.3,
         flexibleSpace: FlexibleSpaceBar(
