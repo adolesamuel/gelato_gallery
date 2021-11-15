@@ -23,9 +23,23 @@ class _GalleryListItemState extends State<GalleryListItem> {
               builder: (context) => PhotoDetailPage(photo: widget.photo),
             ));
       },
-      child: Image.network(
-        widget.photo.imageUrl,
-        fit: BoxFit.cover,
+      child: Stack(
+        children: [
+          Image.network(
+            widget.photo.imageUrl,
+            fit: BoxFit.cover,
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                widget.photo.author,
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
