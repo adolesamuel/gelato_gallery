@@ -70,11 +70,13 @@ class PhotoModel extends Photo {
     //so I strip the first part less the width and height
     //and attach the (image height and width both divided by 10)
 
-    double height = (map['height'] / 10);
+    int scaleFactor = 5;
 
-    double width = (map['width'] / 10);
+    double height = (map['height'] / scaleFactor);
 
-    //just strips everything till picture.id
+    double width = (map['width'] / scaleFactor);
+
+    //just strips everything till picture id
     final regex = RegExp(r'^([a-z]+\:\/\/[a-z]+\.[a-z]+\/[a-z]+\/[0-9]+\/)');
 
     //this won't always return a match if the download_url format changes

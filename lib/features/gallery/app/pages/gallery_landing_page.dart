@@ -69,7 +69,10 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
                 itemBuilder: (context, index) {
                   return index >= photoList.length - 1
                       ? LinearProgressIndicator()
-                      : Image.network(photoList[index].photoDownloadUrl);
+                      : Image.network(
+                          photoList[index].imageUrl,
+                          fit: BoxFit.cover,
+                        );
                 });
 
             // return Center(
