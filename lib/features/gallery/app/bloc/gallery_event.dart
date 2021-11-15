@@ -11,5 +11,5 @@ class FetchPhotosEvent extends GalleryEvent {
   final String page;
   final String limit;
 
-  FetchPhotosEvent({this.page = '1', this.limit = '20'});
+  FetchPhotosEvent({required this.page, this.limit = '5'});
 }

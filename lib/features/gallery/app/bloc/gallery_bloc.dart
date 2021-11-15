@@ -24,8 +24,8 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
       //first time requesting infinite list
       emit(FetchPhotosLoadingState());
 
-      final getPhotosOrFailure = await getPhotos(
-          GetPhotosParams(state.startIndex.toString(), event.limit));
+      final getPhotosOrFailure =
+          await getPhotos(GetPhotosParams(event.page, event.limit));
 
       emit(getPhotosOrFailure.fold((failure) => FetchPhotosErrorState(failure),
           (photos) {
@@ -38,8 +38,8 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
     } else {
       emit(FetchPhotosLoadingState());
       //increase the page integer here
-      final getPhotosOrFailure = await getPhotos(
-          GetPhotosParams((state.startIndex + 1).toString(), event.limit));
+      final getPhotosOrFailure =
+          await getPhotos(GetPhotosParams(event.page, event.limit));
 
       emit(getPhotosOrFailure.fold((failure) => FetchPhotosErrorState(failure),
           (photos) {
@@ -48,6 +48,7 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
         return photos.isEmpty
             ? state.copyWith(hasReachedMax: true)
             : state.copyWith(
+                startIndex: state.startIndex + 1,
                 isFirstTime: false,
                 photos: photos,
                 // photos: List.of(state.photos)..addAll(photos),

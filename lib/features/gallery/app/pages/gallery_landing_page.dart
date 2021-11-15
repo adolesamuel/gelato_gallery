@@ -15,6 +15,7 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
   GalleryBloc galleryBloc = sl<GalleryBloc>();
   final _scrollController = ScrollController();
   List<Photo> photoList = [];
+  int startIndex = 1;
 
   @override
   void initState() {
@@ -32,7 +33,8 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
 
   void _onScroll() {
     if (_isBottom) {
-      galleryBloc..add(FetchPhotosEvent());
+      startIndex += 1;
+      galleryBloc.add(FetchPhotosEvent(page: (startIndex).toString()));
     }
   }
 
@@ -50,7 +52,8 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
         title: Text('Gallery Page'),
       ),
       body: BlocProvider<GalleryBloc>(
-        create: (context) => galleryBloc..add(FetchPhotosEvent()),
+        create: (context) =>
+            galleryBloc..add(FetchPhotosEvent(page: startIndex.toString())),
         child: BlocConsumer<GalleryBloc, GalleryState>(
           listener: (context, state) {
             if (state is GalleryState) {
@@ -58,18 +61,40 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
             }
           },
           builder: (context, state) {
+            print(photoList.length);
             return ListView.builder(
-                addAutomaticKeepAlives: false,
+                addAutomaticKeepAlives: true,
                 controller: _scrollController,
                 itemCount: photoList.length,
                 itemBuilder: (context, index) {
-                  print(photoList.length);
                   return index >= photoList.length - 1
                       ? LinearProgressIndicator()
-                      : ListTile(
-                          title: Text(photoList[index].author),
-                        );
+                      : Image.network(photoList[index].photoDownloadUrl);
                 });
+
+            // return Center(
+            //   child: LinearProgressIndicator(
+            //     value: imageChunk.expectedTotalBytes != null
+            //         ? imageChunk.cumulativeBytesLoaded /
+            //             imageChunk.expectedTotalBytes!
+            //                 .toDouble()
+            //         : null,
+            //   ),
+            // );
+
+            // return ListView.builder(
+            //     addAutomaticKeepAlives: false,
+            //     controller: _scrollController,
+            //     itemCount: photoList.length,
+            //     itemBuilder: (context, index) {
+            //       print(photoList.length);
+            //       return index >= photoList.length - 1
+            //           ? LinearProgressIndicator()
+            //           : ListTile(
+            //               // onTap: () {},
+            //               title: Text(photoList[index].author),
+            //             );
+            //     });
           },
         ),
       ),
