@@ -14,20 +14,17 @@ class Photo extends Equatable {
   ///height of the photo
   final int height;
 
-  ///url to fetch small version of photo from
-  final String photoUrl;
+  ///url to fetch web page of author
+  final String authorUrl;
 
   ///Url to download the photo to
   final String photoDownloadUrl;
 
-  Photo(
-    this.id,
-    this.author,
-    this.width,
-    this.height,
-    this.photoUrl,
-    this.photoDownloadUrl,
-  );
+  ///Small image url
+  final String imageUrl;
+
+  Photo(this.id, this.author, this.width, this.height, this.authorUrl,
+      this.photoDownloadUrl, this.imageUrl);
 
   @override
   List<Object?> get props => [
@@ -35,7 +32,8 @@ class Photo extends Equatable {
         author,
         width,
         height,
-        photoUrl,
+        authorUrl,
         photoDownloadUrl,
+        imageUrl,
       ];
 }

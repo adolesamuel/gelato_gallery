@@ -20,26 +20,31 @@ class PhotoModel extends Photo {
 
   ///url to fetch small version of photo from
   @override
-  final String photoUrl;
+  final String authorUrl;
 
   ///Url to download the photo to
   @override
   final String photoDownloadUrl;
+
+  @override
+  final String imageUrl;
 
   PhotoModel({
     required this.id,
     required this.author,
     required this.width,
     required this.height,
-    required this.photoUrl,
+    required this.authorUrl,
     required this.photoDownloadUrl,
+    required this.imageUrl,
   }) : super(
           id,
           author,
           width,
           height,
-          photoUrl,
+          authorUrl,
           photoDownloadUrl,
+          imageUrl,
         );
 
   //Creates a photo object from a map
@@ -49,8 +54,35 @@ class PhotoModel extends Photo {
       author: map['author'],
       width: map['width'],
       height: map['height'],
-      photoUrl: map['url'],
+      authorUrl: map['url'],
       photoDownloadUrl: map['download_url'],
+      imageUrl: _getSmallImageUrl(map),
     );
+  }
+
+  ///Create a small image url from the download_url
+  static String _getSmallImageUrl(Map map) {
+    String url = map['download_url'];
+
+    // sample download_url is 'https://picsum.photos/id/1000/5626/3635';
+    //and from api docs, appending sizes to images helps reduce the image size
+    //the last lines 8 digit represents the sizes
+    //so I strip the first part less the width and height
+    //and attach the (image height and width both divided by 10)
+
+    double height = (map['height'] / 10);
+
+    double width = (map['width'] / 10);
+
+    //just strips everything till picture.id
+    final regex = RegExp(r'^([a-z]+\:\/\/[a-z]+\.[a-z]+\/[a-z]+\/[0-9]+\/)');
+
+    //this won't always return a match if the download_url format changes
+    final match = regex.stringMatch(url);
+
+    final imageUrl =
+        match! + width.toInt().toString() + '/' + height.toInt().toString();
+
+    return imageUrl;
   }
 }
