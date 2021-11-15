@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gelato_gallery/features/common/scroll_behavior.dart';
 import 'package:gelato_gallery/features/gallery/app/bloc/gallery_bloc.dart';
+import 'package:gelato_gallery/features/gallery/app/pages/photo_detail_page.dart';
 import 'package:gelato_gallery/features/gallery/app/widgets/gallery_list_item.dart';
 import 'package:gelato_gallery/features/gallery/app/widgets/gallery_sliver_app_bar.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
@@ -75,6 +76,15 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
                         delegate: SliverChildBuilderDelegate(
                             (context, index) => GalleryListItem(
                                   photo: photoList[index],
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PhotoDetailPage(
+                                              position: index,
+                                              photos: photoList),
+                                        ));
+                                  },
                                 ),
                             childCount: photoList.length),
                       ),
