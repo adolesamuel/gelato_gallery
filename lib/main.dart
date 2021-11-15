@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Gallery App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.pink,
       ),
       home: const GalleryLandingPage(),
     );

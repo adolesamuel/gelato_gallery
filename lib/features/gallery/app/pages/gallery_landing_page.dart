@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gelato_gallery/features/gallery/app/bloc/gallery_bloc.dart';
+import 'package:gelato_gallery/features/gallery/app/widgets/gallery_list_item.dart';
+import 'package:gelato_gallery/features/gallery/app/widgets/gallery_sliver_app_bar.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
 import 'package:gelato_gallery/injection_container.dart';
 
@@ -47,11 +49,7 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Gallery Page'),
-      ),
-      body: BlocProvider<GalleryBloc>(
+    return BlocProvider(
         create: (context) =>
             galleryBloc..add(FetchPhotosEvent(page: startIndex.toString())),
         child: BlocConsumer<GalleryBloc, GalleryState>(
@@ -61,46 +59,77 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
             }
           },
           builder: (context, state) {
-            print(photoList.length);
-            return ListView.builder(
-                addAutomaticKeepAlives: true,
+            return Scaffold(
+              body: CustomScrollView(
                 controller: _scrollController,
-                itemCount: photoList.length,
-                itemBuilder: (context, index) {
-                  return index >= photoList.length - 1
-                      ? LinearProgressIndicator()
-                      : Image.network(
-                          photoList[index].imageUrl,
-                          fit: BoxFit.cover,
-                        );
-                });
-
-            // return Center(
-            //   child: LinearProgressIndicator(
-            //     value: imageChunk.expectedTotalBytes != null
-            //         ? imageChunk.cumulativeBytesLoaded /
-            //             imageChunk.expectedTotalBytes!
-            //                 .toDouble()
-            //         : null,
-            //   ),
-            // );
-
-            // return ListView.builder(
-            //     addAutomaticKeepAlives: false,
-            //     controller: _scrollController,
-            //     itemCount: photoList.length,
-            //     itemBuilder: (context, index) {
-            //       print(photoList.length);
-            //       return index >= photoList.length - 1
-            //           ? LinearProgressIndicator()
-            //           : ListTile(
-            //               // onTap: () {},
-            //               title: Text(photoList[index].author),
-            //             );
-            //     });
+                slivers: [
+                  GallerySliverAppBar(),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => GalleryListItem(
+                              photo: photoList[index],
+                            ),
+                        childCount: photoList.length),
+                  ),
+                ],
+              ),
+            );
           },
-        ),
-      ),
-    );
+        ));
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Gallery Page'),
+    //   ),
+    //   body: BlocProvider<GalleryBloc>(
+    //     create: (context) =>
+    //         galleryBloc..add(FetchPhotosEvent(page: startIndex.toString())),
+    //     child: BlocConsumer<GalleryBloc, GalleryState>(
+    //       listener: (context, state) {
+    //         if (state is GalleryState) {
+    //           photoList.addAll(state.photos);
+    //         }
+    //       },
+    //       builder: (context, state) {
+    //         print(photoList.length);
+    //         return ListView.builder(
+    //             addAutomaticKeepAlives: true,
+    //             controller: _scrollController,
+    //             itemCount: photoList.length,
+    //             itemBuilder: (context, index) {
+    //               return index >= photoList.length - 1
+    //                   ? LinearProgressIndicator()
+    //                   : Image.network(
+    //                       photoList[index].imageUrl,
+    //                       fit: BoxFit.cover,
+    //                     );
+    //             });
+
+    //         // return Center(
+    //         //   child: LinearProgressIndicator(
+    //         //     value: imageChunk.expectedTotalBytes != null
+    //         //         ? imageChunk.cumulativeBytesLoaded /
+    //         //             imageChunk.expectedTotalBytes!
+    //         //                 .toDouble()
+    //         //         : null,
+    //         //   ),
+    //         // );
+
+    //         // return ListView.builder(
+    //         //     addAutomaticKeepAlives: false,
+    //         //     controller: _scrollController,
+    //         //     itemCount: photoList.length,
+    //         //     itemBuilder: (context, index) {
+    //         //       print(photoList.length);
+    //         //       return index >= photoList.length - 1
+    //         //           ? LinearProgressIndicator()
+    //         //           : ListTile(
+    //         //               // onTap: () {},
+    //         //               title: Text(photoList[index].author),
+    //         //             );
+    //         //     });
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 }
