@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
+import 'package:gelato_gallery/features/image_download/image_downloader.dart';
+import 'package:photo_view/photo_view.dart';
 
 class SingleImageWidget extends StatefulWidget {
   final Photo photo;
@@ -12,63 +14,50 @@ class SingleImageWidget extends StatefulWidget {
   _SingleImageWidgetState createState() => _SingleImageWidgetState();
 }
 
-class _SingleImageWidgetState extends State<SingleImageWidget>
-    with SingleTickerProviderStateMixin {
-  late TransformationController zoomController; //Controller for zooming
-
-  late Animation<Matrix4> _animationReset; //reset controller values
-
-  late AnimationController
-      _controllerReset; //Controller for controling the zoom animation
-
-  ///reset the animation to default state
-  void _onAnimateReset() {
-    zoomController.value = _animationReset.value;
-    if (!_controllerReset.isAnimating) {
-      _animationReset.removeListener(_onAnimateReset);
-      // _animationReset = null;
-      _controllerReset.reset();
-    }
-  }
-
-  //resets the zoom controller to default state
-  void _animateResetInitialize() {
-    _controllerReset.reset();
-    _animationReset = Matrix4Tween(
-      begin: zoomController.value,
-      end: Matrix4.identity(),
-    ).animate(_controllerReset);
-    _animationReset.addListener(_onAnimateReset);
-    _controllerReset.forward();
-  }
-
+class _SingleImageWidgetState extends State<SingleImageWidget> {
   @override
   void initState() {
     super.initState();
-    zoomController = TransformationController();
-
-    _controllerReset = AnimationController(
-      vsync: this,
-      duration:
-          const Duration(milliseconds: 400), //duration of zoomout animation
-    );
   }
 
   @override
   void dispose() {
-    zoomController.dispose();
-    _controllerReset.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: _animateResetInitialize, //on double tap reset zoom state
-      child: InteractiveViewer(
-        transformationController:
-            zoomController, //registering widget to controller
-        child: Image.network(widget.photo.imageUrl),
+    return Scaffold(
+      body: Stack(
+        children: [
+          PhotoView(
+              loadingBuilder: (context, imageChunk) {
+                return imageChunk != null
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        value: imageChunk.expectedTotalBytes == null
+                            ? 0
+                            : imageChunk.cumulativeBytesLoaded /
+                                imageChunk.expectedTotalBytes!.toInt(),
+                      ))
+                    : Center(child: CircularProgressIndicator());
+              },
+              imageProvider: NetworkImage(widget.photo.photoDownloadUrl)),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: IconButton(
+                  onPressed: () => requestDownload(
+                      widget.photo.photoDownloadUrl,
+                      widget.photo.author + widget.photo.id),
+                  icon: Icon(
+                    Icons.info_outline,
+                    color: Colors.white,
+                  )),
+            ),
+          )
+        ],
       ),
     );
   }

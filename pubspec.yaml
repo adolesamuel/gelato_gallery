@@ -28,10 +28,15 @@ dependencies:
   dartz: ^0.10.0
   equatable: ^2.0.3
   flutter_bloc: ^7.3.0
+  flutter_downloader: ^1.7.1
   get_it: ^7.2.0
   http: ^0.13.3
   internet_connection_checker: ^0.0.1+2
+ # permission_handler: ^8.3.0
   photo_view: ^0.13.0
+  path_provider: ^2.0.7
+  #image_downloader: ^0.31.0
+ 
   
  
 
