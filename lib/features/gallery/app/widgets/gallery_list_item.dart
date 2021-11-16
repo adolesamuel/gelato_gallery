@@ -24,6 +24,15 @@ class _GalleryListItemState extends State<GalleryListItem> {
             alignment: Alignment.center,
             child: CachedNetworkImage(
               imageUrl: widget.photo.imageUrl,
+              errorWidget: (context, value, dyanmic) {
+                return SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Center(
+                    child: Icon(Icons.info),
+                  ),
+                );
+              },
             ),
           ),
           //Author Name
