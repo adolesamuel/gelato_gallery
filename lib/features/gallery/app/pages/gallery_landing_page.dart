@@ -69,42 +69,45 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
             }
           },
           builder: (context, state) {
-            return Scaffold(
-              body: Container(
-                color: Colors.black,
-                child: Scrollbar(
-                  controller: _scrollController,
-                  isAlwaysShown: true,
-                  interactive: true,
-                  child: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: CustomScrollView(
-                      controller: _scrollController,
-                      slivers: [
-                        GallerySliverAppBar(),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (context, index) => Hero(
-                                    tag: photoList[index].id,
-                                    child: GalleryListItem(
-                                      photo: photoList[index],
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Hero(
-                                                tag: photoList[index].id,
-                                                child: PhotoDetailPage(
-                                                    position: index,
-                                                    photos: photoList),
-                                              ),
-                                            ));
-                                      },
+            return SafeArea(
+              top: false,
+              child: Scaffold(
+                body: Container(
+                  color: Colors.black,
+                  child: Scrollbar(
+                    controller: _scrollController,
+                    isAlwaysShown: true,
+                    interactive: true,
+                    child: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: CustomScrollView(
+                        controller: _scrollController,
+                        slivers: [
+                          GallerySliverAppBar(),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (context, index) => Hero(
+                                      tag: photoList[index].id,
+                                      child: GalleryListItem(
+                                        photo: photoList[index],
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Hero(
+                                                  tag: photoList[index].id,
+                                                  child: PhotoDetailPage(
+                                                      position: index,
+                                                      photos: photoList),
+                                                ),
+                                              ));
+                                        },
+                                      ),
                                     ),
-                                  ),
-                              childCount: photoList.length),
-                        ),
-                      ],
+                                childCount: photoList.length),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
