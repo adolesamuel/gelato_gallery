@@ -84,7 +84,7 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
           },
           builder: (context, state) {
             return SafeArea(
-              top: false, //guard agains covering home buttons
+              top: false, //guard against covering home buttons
               child: Scaffold(
                 body: Container(
                   color: Colors.black,
