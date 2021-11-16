@@ -38,27 +38,12 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
     //uses a pagview allows swiping from picture to picture
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            PageView.builder(
-                itemCount: photos.length,
-                controller: _pageController,
-                itemBuilder: (context, index) {
-                  return SingleImageWidget(photo: photos[index]);
-                }),
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  )),
-            ),
-          ],
-        ),
+        body: PageView.builder(
+            itemCount: photos.length,
+            controller: _pageController,
+            itemBuilder: (context, index) {
+              return SingleImageWidget(photo: photos[index]);
+            }),
       ),
     );
   }
