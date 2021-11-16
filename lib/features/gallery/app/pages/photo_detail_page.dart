@@ -36,12 +36,15 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   @override
   Widget build(BuildContext context) {
     //uses a pagview allows swiping from picture to picture
-    return PageView.builder(
-        itemCount: photos.length,
-        controller: _pageController,
-        itemBuilder: (context, index) {
-          return SingleImageWidget(photo: photos[index]);
-        });
+    return Hero(
+      tag: photos[widget.position].id,
+      child: PageView.builder(
+          itemCount: photos.length,
+          controller: _pageController,
+          itemBuilder: (context, index) {
+            return SingleImageWidget(photo: photos[index]);
+          }),
+    );
 
     // return Scaffold(
     //   appBar: AppBar(

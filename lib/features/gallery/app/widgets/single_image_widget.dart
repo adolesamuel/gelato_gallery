@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
-import 'package:gelato_gallery/features/image_download/image_downloader.dart';
+// import 'package:gelato_gallery/features/image_download/image_downloader.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SingleImageWidget extends StatefulWidget {
@@ -48,9 +48,10 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: IconButton(
-                  onPressed: () => requestDownload(
-                      widget.photo.photoDownloadUrl,
-                      widget.photo.author + widget.photo.id),
+                  onPressed: () {},
+                  //  () => requestDownload(
+                  //     widget.photo.photoDownloadUrl,
+                  //     widget.photo.author + widget.photo.id),
                   icon: Icon(
                     Icons.info_outline,
                     color: Colors.white,
