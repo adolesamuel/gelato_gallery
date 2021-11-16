@@ -40,17 +40,20 @@ class _GalleryListItemState extends State<GalleryListItem> {
             alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget.photo.author,
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    shadows: const [
-                      Shadow(
-                          color: Colors.black,
-                          blurRadius: 1.0,
-                          offset: Offset(0.5, 0.0))
-                    ]),
+              child: Material(
+                color: Colors.transparent,
+                child: Text(
+                  widget.photo.author,
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      shadows: const [
+                        Shadow(
+                            color: Colors.black,
+                            blurRadius: 1.0,
+                            offset: Offset(0.5, 0.0))
+                      ]),
+                ),
               ),
             ),
           )
