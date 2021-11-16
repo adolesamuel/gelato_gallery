@@ -9,7 +9,6 @@ class GallerySliverAppBar extends StatefulWidget {
 
 class _GallerySliverAppBarState extends State<GallerySliverAppBar> {
   //asset image
-
   String bgAssetString = 'assets/bg.jpg';
 
   @override

@@ -79,7 +79,7 @@ class PhotoModel extends Photo {
     //just strips everything till picture id
     final regex = RegExp(r'^([a-z]+\:\/\/[a-z]+\.[a-z]+\/[a-z]+\/[0-9]+\/)');
 
-    //this won't always return a match if the download_url format changes
+    //this won't return a match if the download_url format changes
     final match = regex.stringMatch(url);
 
     final imageUrl =
