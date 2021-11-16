@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
 
@@ -21,9 +22,8 @@ class _GalleryListItemState extends State<GalleryListItem> {
           //Image widget
           Align(
             alignment: Alignment.center,
-            child: Image.network(
-              widget.photo.imageUrl,
-              fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: widget.photo.imageUrl,
             ),
           ),
           //Author Name
