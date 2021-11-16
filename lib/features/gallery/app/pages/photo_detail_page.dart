@@ -36,33 +36,30 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   @override
   Widget build(BuildContext context) {
     //uses a pagview allows swiping from picture to picture
-    return Hero(
-      tag: photos[widget.position].id,
-      child: PageView.builder(
-          itemCount: photos.length,
-          controller: _pageController,
-          itemBuilder: (context, index) {
-            return SingleImageWidget(photo: photos[index]);
-          }),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            PageView.builder(
+                itemCount: photos.length,
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  return SingleImageWidget(photo: photos[index]);
+                }),
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  )),
+            ),
+          ],
+        ),
+      ),
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.transparent,
-    //   ),
-    //   body: Center(
-    //     child: Image.network(
-    //       widget.photo.photoDownloadUrl,
-    //       // loadingBuilder: (context, child, imageChunk) {
-    //       //   return CircularProgressIndicator(
-    //       //     value: imageChunk!.expectedTotalBytes != null
-    //       //         ? imageChunk.cumulativeBytesLoaded /
-    //       //             imageChunk.expectedTotalBytes!.toDouble()
-    //       //         : null,
-    //       //   );
-    //       // },
-    //     ),
-    //   ),
-    // );
   }
 }

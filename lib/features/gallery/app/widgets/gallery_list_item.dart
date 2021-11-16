@@ -16,37 +16,36 @@ class _GalleryListItemState extends State<GalleryListItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onTap,
-      child: Hero(
-        tag: widget.photo.id,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Image.network(
-                widget.photo.imageUrl,
-                fit: BoxFit.cover,
+      child: Stack(
+        children: [
+          //Image widget
+          Align(
+            alignment: Alignment.center,
+            child: Image.network(
+              widget.photo.imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          //Author Name
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                widget.photo.author,
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    shadows: const [
+                      Shadow(
+                          color: Colors.black,
+                          blurRadius: 1.0,
+                          offset: Offset(0.5, 0.0))
+                    ]),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.photo.author,
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      shadows: const [
-                        Shadow(
-                            color: Colors.black,
-                            blurRadius: 1.0,
-                            offset: Offset(0.5, 0.0))
-                      ]),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

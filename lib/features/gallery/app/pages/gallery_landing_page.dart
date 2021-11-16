@@ -74,17 +74,23 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
                       GallerySliverAppBar(),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
-                            (context, index) => GalleryListItem(
-                                  photo: photoList[index],
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PhotoDetailPage(
-                                              position: index,
-                                              photos: photoList),
-                                        ));
-                                  },
+                            (context, index) => Hero(
+                                  tag: photoList[index].id,
+                                  child: GalleryListItem(
+                                    photo: photoList[index],
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Hero(
+                                              tag: photoList[index].id,
+                                              child: PhotoDetailPage(
+                                                  position: index,
+                                                  photos: photoList),
+                                            ),
+                                          ));
+                                    },
+                                  ),
                                 ),
                             childCount: photoList.length),
                       ),
@@ -95,60 +101,5 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
             );
           },
         ));
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Gallery Page'),
-    //   ),
-    //   body: BlocProvider<GalleryBloc>(
-    //     create: (context) =>
-    //         galleryBloc..add(FetchPhotosEvent(page: startIndex.toString())),
-    //     child: BlocConsumer<GalleryBloc, GalleryState>(
-    //       listener: (context, state) {
-    //         if (state is GalleryState) {
-    //           photoList.addAll(state.photos);
-    //         }
-    //       },
-    //       builder: (context, state) {
-    //         print(photoList.length);
-    //         return ListView.builder(
-    //             addAutomaticKeepAlives: true,
-    //             controller: _scrollController,
-    //             itemCount: photoList.length,
-    //             itemBuilder: (context, index) {
-    //               return index >= photoList.length - 1
-    //                   ? LinearProgressIndicator()
-    //                   : Image.network(
-    //                       photoList[index].imageUrl,
-    //                       fit: BoxFit.cover,
-    //                     );
-    //             });
-
-    //         // return Center(
-    //         //   child: LinearProgressIndicator(
-    //         //     value: imageChunk.expectedTotalBytes != null
-    //         //         ? imageChunk.cumulativeBytesLoaded /
-    //         //             imageChunk.expectedTotalBytes!
-    //         //                 .toDouble()
-    //         //         : null,
-    //         //   ),
-    //         // );
-
-    //         // return ListView.builder(
-    //         //     addAutomaticKeepAlives: false,
-    //         //     controller: _scrollController,
-    //         //     itemCount: photoList.length,
-    //         //     itemBuilder: (context, index) {
-    //         //       print(photoList.length);
-    //         //       return index >= photoList.length - 1
-    //         //           ? LinearProgressIndicator()
-    //         //           : ListTile(
-    //         //               // onTap: () {},
-    //         //               title: Text(photoList[index].author),
-    //         //             );
-    //         //     });
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

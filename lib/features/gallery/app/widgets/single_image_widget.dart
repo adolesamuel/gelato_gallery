@@ -33,14 +33,19 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
           PhotoView(
               loadingBuilder: (context, imageChunk) {
                 return imageChunk != null
-                    ? Center(
-                        child: CircularProgressIndicator(
-                        value: imageChunk.expectedTotalBytes == null
-                            ? 0
-                            : imageChunk.cumulativeBytesLoaded /
-                                imageChunk.expectedTotalBytes!.toInt(),
-                      ))
-                    : Center(child: CircularProgressIndicator());
+                    ? Container(
+                        color: Colors.black,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          value: imageChunk.expectedTotalBytes == null
+                              ? 0
+                              : imageChunk.cumulativeBytesLoaded /
+                                  imageChunk.expectedTotalBytes!.toInt(),
+                        )),
+                      )
+                    : Container(
+                        color: Colors.black,
+                        child: Center(child: CircularProgressIndicator()));
               },
               imageProvider: NetworkImage(widget.photo.photoDownloadUrl)),
           Align(
@@ -49,9 +54,6 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
               padding: const EdgeInsets.all(16.0),
               child: IconButton(
                   onPressed: () {},
-                  //  () => requestDownload(
-                  //     widget.photo.photoDownloadUrl,
-                  //     widget.photo.author + widget.photo.id),
                   icon: Icon(
                     Icons.info_outline,
                     color: Colors.white,
