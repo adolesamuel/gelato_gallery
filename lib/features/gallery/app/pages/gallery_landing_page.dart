@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gelato_gallery/features/common/scroll_behavior.dart';
@@ -19,11 +21,17 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
   GalleryBloc galleryBloc = sl<GalleryBloc>();
   final _scrollController = ScrollController();
   List<Photo> photoList = [];
+
+  //Change the start index so it doesn't always load same set everytime
+//getting a random int between the min and max index
+  //of the backgroundStringAssetList
+  // int get randomIndex => Random().nextInt(10);
   int startIndex = 1;
 
   @override
   void initState() {
     super.initState();
+    // startIndex = randomIndex;
     _scrollController.addListener(_onScroll);
   }
 
