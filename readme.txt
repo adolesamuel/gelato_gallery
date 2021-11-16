@@ -18,7 +18,7 @@ Activities performed in the feature include:
 
 Additionally:
     1. Images on the Gallery Page are cached using the CachedNetworkImage widget.
-    2. Only Unit test for Gallery Usecase has been implemented.
+    2. Only Unit test for Gallery Usecase get_photos has been implemented.
     3. App Icon has been added.
     4. Splash Screen has been added.
     5. Custom Scrollbar implemented.
