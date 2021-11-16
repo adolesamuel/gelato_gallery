@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gelato_gallery/features/gallery/app/widgets/photo_info.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
 import 'package:image_downloader/image_downloader.dart';
-// import 'package:gelato_gallery/features/image_download/image_downloader.dart';
 import 'package:photo_view/photo_view.dart';
 
+//Show image in full screen
+//with close, download and info bars
 class SingleImageWidget extends StatefulWidget {
+  ///Current photo
   final Photo photo;
   const SingleImageWidget({
     Key? key,
@@ -32,6 +34,7 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
     return Scaffold(
       body: Stack(
         children: [
+          //Image holding widget
           PhotoView(
               loadingBuilder: (context, imageChunk) {
                 return imageChunk != null
@@ -50,6 +53,7 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
                         child: Center(child: CircularProgressIndicator()));
               },
               imageProvider: NetworkImage(widget.photo.photoDownloadUrl)),
+          //Close button
           Align(
             alignment: Alignment.topLeft,
             child: IconButton(
@@ -61,11 +65,14 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
                   color: Colors.white,
                 )),
           ),
+
+          //Download Button and Info Button
           Align(
             alignment: Alignment.topRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                //download button
                 IconButton(
                     onPressed: () async {
                       await ImageDownloader.downloadImage(
@@ -77,6 +84,8 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
                       Icons.download,
                       color: Colors.white,
                     )),
+
+                //Info button
                 IconButton(
                     onPressed: () {
                       showPhotoInfo(context, widget.photo);
@@ -93,6 +102,7 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
     );
   }
 
+  ///shows the bottom sheet that has Photo Information
   void showPhotoInfo(BuildContext context, Photo photo) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -109,6 +119,7 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
         });
   }
 
+  //Helps download image
   void showImageDownloaded(BuildContext context, Photo photo) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(

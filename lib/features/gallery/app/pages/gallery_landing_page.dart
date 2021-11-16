@@ -18,12 +18,21 @@ class GalleryLandingPage extends StatefulWidget {
 }
 
 class _GalleryLandingPageState extends State<GalleryLandingPage> {
+  //Gallery Bloc
   GalleryBloc galleryBloc = sl<GalleryBloc>();
+
+  //Scroll controller for all the list
   final _scrollController = ScrollController();
+
+  //Photos list that gets populated
   List<Photo> photoList = [];
 
-  //Change the start index so it doesn't always load same set everytime
-//getting a random int between the min and max index
+  //I was changing the start index
+  //so it doesn't always load same set everytime
+  //But has been disabled to ensure consistency of images
+  //so my app can be better evaluated
+  //
+  //getting a random int between the min and max index
   //of the backgroundStringAssetList
   // int get randomIndex => Random().nextInt(10);
   int startIndex = 1;
@@ -45,12 +54,15 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
 
   void _onScroll() {
     if (_isBottom) {
+      //if at bottom increase start index and fetch more photos
       startIndex += 1;
       galleryBloc.add(FetchPhotosEvent(page: (startIndex).toString()));
     }
   }
 
   bool get _isBottom {
+    //Detect when the current scroll position is at the
+    //maximum extent present. i.e scrolled to bottom of page
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
@@ -61,16 +73,18 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) =>
+            //Make request immediately page loads
             galleryBloc..add(FetchPhotosEvent(page: startIndex.toString())),
         child: BlocConsumer<GalleryBloc, GalleryState>(
           listener: (context, state) {
+            //when images are successfully returned
             if (state is GalleryState) {
               photoList.addAll(state.photos);
             }
           },
           builder: (context, state) {
             return SafeArea(
-              top: false,
+              top: false, //guard agains covering home buttons
               child: Scaffold(
                 body: Container(
                   color: Colors.black,
@@ -79,15 +93,19 @@ class _GalleryLandingPageState extends State<GalleryLandingPage> {
                     isAlwaysShown: true,
                     interactive: true,
                     child: ScrollConfiguration(
-                      behavior: MyBehavior(),
+                      behavior: MyBehavior(), //Custom scroll indicator
                       child: CustomScrollView(
                         controller: _scrollController,
                         slivers: [
+                          //My Beautiful AppBar
                           GallerySliverAppBar(),
+
+                          //List of scrolling images
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                                 (context, index) => Hero(
-                                      tag: photoList[index].id,
+                                      tag: photoList[index]
+                                          .id, //using hero to animate between pages
                                       child: GalleryListItem(
                                         photo: photoList[index],
                                         onTap: () {
