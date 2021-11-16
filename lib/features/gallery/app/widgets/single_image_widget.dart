@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gelato_gallery/features/gallery/app/widgets/photo_info.dart';
 import 'package:gelato_gallery/features/gallery/domain/entities/photo.dart';
 // import 'package:gelato_gallery/features/image_download/image_downloader.dart';
 import 'package:photo_view/photo_view.dart';
@@ -50,18 +51,33 @@ class _SingleImageWidgetState extends State<SingleImageWidget> {
               imageProvider: NetworkImage(widget.photo.photoDownloadUrl)),
           Align(
             alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.info_outline,
-                    color: Colors.white,
-                  )),
-            ),
+            child: IconButton(
+                onPressed: () {
+                  showPhotoInfo(context, widget.photo);
+                },
+                icon: Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                )),
           )
         ],
       ),
     );
+  }
+
+  void showPhotoInfo(BuildContext context, Photo photo) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
+        context: context,
+        builder: (context) {
+          return PhotoInfo(
+            photo: photo,
+          );
+        });
   }
 }
