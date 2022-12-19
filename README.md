@@ -1,4 +1,4 @@
-# Pixel8 News App.
+# Pixel8 Wallpaper App.
 
 A new Flutter project.
 
